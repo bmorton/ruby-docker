@@ -4,7 +4,7 @@ MAINTAINER Brian Morton "bmorton@yammer-inc.com"
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
-RUN apt-get install -y curl ca-certificates git build-essential libtool autoconf libtcmalloc-minimal4
+RUN apt-get install -y curl ca-certificates git build-essential libtool autoconf libtcmalloc-minimal4 ruby
 
 # Install chruby
 WORKDIR /tmp
@@ -39,5 +39,6 @@ RUN echo 'chruby ruby' >> /etc/profile.d/default_ruby.sh
 RUN echo "export LD_PRELOAD=/usr/lib/libtcmalloc_minimal.so.4:${LD_PRELOAD}" >> /etc/profile.d/exports.sh
 
 # Clean up APT when done.
+RUN apt-get remove ruby
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 WORKDIR /
