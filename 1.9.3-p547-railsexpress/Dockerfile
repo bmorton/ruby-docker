@@ -20,8 +20,8 @@ RUN tar -xzvf ruby-install.tar.gz
 WORKDIR /tmp/ruby-install-0.4.3
 RUN make install
 
-RUN ruby-install -p https://gist.githubusercontent.com/bmorton/46e037136741d95c9926/raw/74b8d615550d46a865921ccc8391fd02b01d2de8/railsexpress-1.9.3-p547.patch \
- ruby 1.9.3-p547 -- --enable-shared CFLAGS="-O3"
+ADD 1.9.3-p547-railsexpress.patch /tmp/1.9.3-p547-railsexpress.patch
+RUN ruby-install -p /tmp/1.9.3-p547-railsexpress.patch ruby 1.9.3-p547 -- --enable-shared CFLAGS="-O3"
 
 RUN echo '[ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] || return' >> /etc/profile.d/chruby.sh
 RUN echo 'source /usr/local/share/chruby/chruby.sh' >> /etc/profile.d/chruby.sh
