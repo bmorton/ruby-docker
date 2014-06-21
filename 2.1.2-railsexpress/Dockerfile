@@ -1,4 +1,4 @@
-FROM phusion/baseimage
+FROM ubuntu:14.04
 MAINTAINER Brian Morton "bmorton@yammer-inc.com"
 
 ENV DEBIAN_FRONTEND noninteractive
