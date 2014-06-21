@@ -20,8 +20,26 @@ RUN tar -xzvf ruby-install.tar.gz
 WORKDIR /tmp/ruby-install-0.4.3
 RUN make install
 
-ADD 1.9.3-p484-railsexpress.patch /tmp/1.9.3-p484-railsexpress.patch
-RUN ruby-install -p /tmp/1.9.3-p484-railsexpress.patch ruby 1.9.3-p484 -- --enable-shared CFLAGS="-O3"
+RUN ruby-install \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/01-fix-make-clean.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/02-railsbench-gc.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/03-display-more-detailed-stack-trace.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/04-fork-support-for-gc-logging.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/05-track-live-dataset-size.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/06-webrick_204_304_keep_alive_fix.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/07-export-a-few-more-symbols-for-ruby-prof.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/08-thread-variables.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/09-faster-loading.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/10-falcon-st-opt.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/11-falcon-sparse-array.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/12-falcon-array-queue.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/13-railsbench-gc-fixes.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/14-show-full-backtrace-on-stack-overflow.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/15-configurable-fiber-stack-sizes.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/16-backport-psych-20.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/17-fix-missing-c-return-event.patch \
+  -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/1.9.3/p484/railsexpress/18-fix-process-daemon-call.patch \
+  ruby 1.9.3-p484 -- --enable-shared CFLAGS="-O3"
 
 RUN echo '[ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] || return' >> /etc/profile.d/chruby.sh
 RUN echo 'source /usr/local/share/chruby/chruby.sh' >> /etc/profile.d/chruby.sh
