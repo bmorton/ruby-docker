@@ -7,20 +7,16 @@ RUN apt-get update
 RUN apt-get install -y curl ca-certificates git build-essential libtool autoconf libtcmalloc-minimal4
 
 # Install chruby
-WORKDIR /tmp
 ADD https://github.com/postmodern/chruby/archive/v0.3.8.tar.gz /tmp/chruby.tar.gz
-RUN tar -xzvf chruby.tar.gz
-WORKDIR /tmp/chruby-0.3.8
-RUN make install
+RUN cd /tmp && tar -xzvf chruby.tar.gz
+RUN cd /tmp/chruby-0.3.8 && make install
 
 # Install ruby-install
-WORKDIR /tmp
 ADD https://github.com/postmodern/ruby-install/archive/v0.4.3.tar.gz /tmp/ruby-install.tar.gz
-RUN tar -xzvf ruby-install.tar.gz
-WORKDIR /tmp/ruby-install-0.4.3
-RUN make install
+RUN cd /tmp && tar -xzvf ruby-install.tar.gz
+RUN cd /tmp/ruby-install-0.4.3 && make install
 
-RUN ruby-install ruby 2.1.2 -- --enable-shared CFLAGS="-O3"
+RUN ruby-install ruby 2.1.2 -- --disable-install-rdoc --enable-shared CFLAGS="-O3"
 
 RUN echo '[ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] || return' >> /etc/profile.d/chruby.sh
 RUN echo 'source /usr/local/share/chruby/chruby.sh' >> /etc/profile.d/chruby.sh
@@ -29,4 +25,3 @@ RUN echo "export LD_PRELOAD=/usr/lib/libtcmalloc_minimal.so.4:${LD_PRELOAD}" >> 
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-WORKDIR /
