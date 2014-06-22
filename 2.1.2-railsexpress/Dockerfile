@@ -39,6 +39,6 @@ RUN echo 'chruby ruby' >> /etc/profile.d/default_ruby.sh
 RUN echo "export LD_PRELOAD=/usr/lib/libtcmalloc_minimal.so.4:${LD_PRELOAD}" >> /etc/profile.d/exports.sh
 
 # Clean up APT when done.
-RUN apt-get remove ruby
+RUN apt-get remove -y ruby
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 WORKDIR /
