@@ -12,9 +12,9 @@ RUN cd /tmp && tar -xzvf chruby.tar.gz
 RUN cd /tmp/chruby-0.3.8 && make install
 
 # Install ruby-install
-ADD https://github.com/postmodern/ruby-install/archive/v0.4.3.tar.gz /tmp/ruby-install.tar.gz
+ADD https://github.com/postmodern/ruby-install/archive/master.tar.gz /tmp/ruby-install.tar.gz
 RUN cd /tmp && tar -xzvf ruby-install.tar.gz
-RUN cd /tmp/ruby-install-0.4.3 && make install
+RUN cd /tmp/ruby-install-master && make install
 
 RUN ruby-install \
   -p https://raw.github.com/skaes/rvm-patchsets/master/patches/ruby/2.1.3/railsexpress/01-zero-broken-tests.patch \
