@@ -16,7 +16,7 @@ ADD https://github.com/postmodern/ruby-install/archive/master.tar.gz /tmp/ruby-i
 RUN cd /tmp && tar -xzvf ruby-install.tar.gz
 RUN cd /tmp/ruby-install-master && make install
 
-RUN ruby-install ruby 2.2.0-preview1 -- --disable-install-rdoc --enable-shared CFLAGS="-O3"
+RUN ruby-install ruby 2.2.0 -- --disable-install-rdoc --enable-shared CFLAGS="-O3"
 
 RUN echo '[ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] || return' >> /etc/profile.d/chruby.sh
 RUN echo 'source /usr/local/share/chruby/chruby.sh' >> /etc/profile.d/chruby.sh
